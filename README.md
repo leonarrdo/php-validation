@@ -1,29 +1,3 @@
-# launch.json para WSL (xdebug)
-
-{
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "name": "Listen for Xdebug",
-        "type": "php",
-        "request": "launch",
-        "port": 9003,
-        "hostname": "0.0.0.0",
-        "pathMappings": {
-          "/var/www/html": "${workspaceFolder}"
-        },
-        "log": true,
-      }
-    ]
-}
-
-# iniciar projeto
-docker-compose up --build -d
-docker exec -it php-validation-app php artisan migrate
-
-
-# --------------------------------------------------------------
-
 # php-validation
 Teste Técnico
 
