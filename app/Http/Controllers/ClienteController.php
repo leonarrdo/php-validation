@@ -19,7 +19,7 @@ class ClienteController extends Controller
         $sortBy = $request->get('sortBy', 'nome');
         $order = $request->get('order', 'asc');
     
-        $clientes = Cliente::orderBy($sortBy, $order)->paginate($perPage);
+        $clientes = Cliente::orderBy($sortBy, $order)->paginate($perPage)->appends(['perPage' => $perPage]);
     
         return view('clientes.index', compact('clientes'));
     }
@@ -109,6 +109,42 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+
+            $cliente->delete();
+
+            DB::commit();
+
+            return redirect()->route('clientes.index')->with('message', 'Cliente excluído com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return redirect()->route('clientes.index')->withErrors([
+                'message' => 'Falha ao excluir cliente. Mensagem técnica: ' . $th->getMessage(),
+            ]);
+        }
+    }
+
+    public function inativar(Cliente $cliente)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $cliente->ativo = !$cliente->ativo;
+            $cliente->save();
+
+            DB::commit();
+
+            return redirect()->route('clientes.index')->with('message', 'Cliente inativado com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return redirect()->route('clientes.index')->withErrors([
+                'message' => 'Falha ao inativar cliente. Mensagem técnica: ' . $th->getMessage(),
+            ]);
+        }
     }
 }
