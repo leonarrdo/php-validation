@@ -1,89 +1,90 @@
-# launch.json para WSL (xdebug)
+## Sobre o Projeto
 
-{
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "name": "Listen for Xdebug",
-        "type": "php",
-        "request": "launch",
-        "port": 9003,
-        "hostname": "0.0.0.0",
-        "pathMappings": {
-          "/var/www/html": "${workspaceFolder}"
-        },
-        "log": true,
-      }
-    ]
-}
+### Tecnologias 
 
-# iniciar projeto
-docker-compose up --build -d
-docker exec -it php-validation-app php artisan migrate
+- PHP
+- Vite
+- Tailwindcss
+- Mysql
+- Npm
+- Docker
+- Nginx
+- Google Recaptcha
 
+## Requisitos para rodar o projeto:
 
-# --------------------------------------------------------------
+- Git
+- Docker
+- Sistema linux ou WSL
+- Google cloud para chaves do reCAPTCH
 
-# php-validation
-Teste Técnico
+## Passos para execução
 
-# Teste para à vaga de Desenvolvedor Full Stack
+### 1 - Clonar o repositório
+```
+git clone https://github.com/leonarrdo/php-validation.git
+```
 
-Olá caro desenvolvedor, nesse teste analisaremos seu conhecimento geral e inclusive velocidade de desenvolvimento.
+### 2 - Abrir a pasta do projeto
+```
+cd php-validation
+```
 
-## Instruções
+### 3 - Clone o arquivo .env.example e crie o .env
+```
+cp .env.example .env
+```
 
-O desafio consiste em implementar uma aplicação web utilizando o framework PHP Laravel, um banco de dados relacional (Mysql ou Postgres), que terá como finalidade o cadastro de clientes em nossa base de dados.
+### 4 - Adicionar as chaves referentes ao recaptcha no .env
+```
+RECAPTCHA_SITE_KEY
+RECAPTCHA_SECRET_KEY
+```
 
-Sua aplicação deve possuir:
+### 5 - Rodar o docker compose
+```
+docker compose up --build -d
+```
 
-- CRUD de clientes:
-  - Criar, editar, excluir e listar cadastros.
-- Um cliente pode se cadastrar apenas uma vez e com verificação de recaptcha no momento do cadastro.
-- Deve ser ser possível "ativar" e "desativar" o cliente, evitando assim no caso de ¨desativar¨ o mesmo que ele não consiga logar na aplicação.
-- Cada CRUD:
-  - Deve ser filtrável e ordenável por qualquer campo, e possuir paginação de 20 itens.
-  - Deve possuir formulários para criação e atualização de seus cadastros.
-  - Deve permitir a deleção de qualquer cliente.
-  - Implementar validações de campos obrigatórios e tipos de dados.
+### 6 - Rodar o npm
+```
+npm install
+```
 
-## Banco de dados
+### 7 - Realizar o build dos arquivos do frontend
+```
+npm run build
+```
 
-- O banco de dados deve ser criado ou editado utilizando Migrations do framework Laravel.
+### 8 - Criar e popular banco de dados
+```
+docker exec -it php-validation-app php artisan migrate --seed
+```
 
-## Tecnologias a serem utilizadas
+### 9 - Abrir a url do projeto no navagedor
+```
+localhost
+```
 
-Devem ser utilizadas as seguintes tecnologias:
+## Imagens do Projeto
 
-- HTML
-- CSS
-- Javascript
-- Framework Laravel (PHP)
-- Docker (construção do ambiente de desenvolvimento)
-- Mysql ou Postgres
+### Login
 
-## Entrega
+<img src="https://i.postimg.cc/v8VjrCYz/Screenshot-1.png" alt="Interface de login">
 
-- Para iniciar o teste, faça um fork deste repositório; **Se você apenas clonar o repositório não vai conseguir fazer push.**
-- Crie uma branch com o seu nome completo;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
+### Cadastro de usuários
 
-## Bônus
+<img src="https://i.postimg.cc/jdY1ZvCr/Screenshot-2.png" alt="Interface de cadastro de usuários">
 
-- API Rest JSON para todos os CRUDS listados acima.
-- Permitir deleção em massa de itens nos CRUDs.
-- Permitir que o usuário mude o número de itens por página.
-- Implementar autenticação de usuário na aplicação.
-- Testes unitários
+### Listagem de clientes
 
-## O que iremos analisar
+<img src="https://i.postimg.cc/BnqVG6xY/Screenshot-5.png" alt="Interface de listagem de clientes">
 
-- Organização do código;
-- Aplicação de design patterns;
-- Aplicação de testes;
-- Separação de módulos e componentes;
-- Legibilidade;
-- Criação do ambiente com Docker.
+### Cadastro de clientes
 
-### Boa sorte!
+<img src="https://i.postimg.cc/6pY16Xc9/Screenshot-6.png" alt="Interface de cadastro de clientes">
+
+### Edição de clientes
+
+<img src="https://i.postimg.cc/3Jjc6pD0/Screenshot-3.png" alt="Interface de edição de clientes">
+
